@@ -84,6 +84,18 @@ build CMakeFiles/Proyecto1.dir/Analizador.cpp.o: CXX_COMPILER__Proyecto1_Debug /
   OBJECT_DIR = CMakeFiles/Proyecto1.dir
   OBJECT_FILE_DIR = CMakeFiles/Proyecto1.dir
 
+build CMakeFiles/Proyecto1.dir/Comandos.cpp.o: CXX_COMPILER__Proyecto1_Debug /home/rodri/Documentos/Archivos/Proyecto1/Comandos.cpp || cmake_object_order_depends_target_Proyecto1
+  DEP_FILE = CMakeFiles/Proyecto1.dir/Comandos.cpp.o.d
+  FLAGS = -g -std=gnu++2a
+  OBJECT_DIR = CMakeFiles/Proyecto1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Proyecto1.dir
+
+build CMakeFiles/Proyecto1.dir/Utils.cpp.o: CXX_COMPILER__Proyecto1_Debug /home/rodri/Documentos/Archivos/Proyecto1/Utils.cpp || cmake_object_order_depends_target_Proyecto1
+  DEP_FILE = CMakeFiles/Proyecto1.dir/Utils.cpp.o.d
+  FLAGS = -g -std=gnu++2a
+  OBJECT_DIR = CMakeFiles/Proyecto1.dir
+  OBJECT_FILE_DIR = CMakeFiles/Proyecto1.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Proyecto1
@@ -92,7 +104,7 @@ build CMakeFiles/Proyecto1.dir/Analizador.cpp.o: CXX_COMPILER__Proyecto1_Debug /
 #############################################
 # Link the executable Proyecto1
 
-build Proyecto1: CXX_EXECUTABLE_LINKER__Proyecto1_Debug CMakeFiles/Proyecto1.dir/main.cpp.o CMakeFiles/Proyecto1.dir/Analizador.cpp.o
+build Proyecto1: CXX_EXECUTABLE_LINKER__Proyecto1_Debug CMakeFiles/Proyecto1.dir/main.cpp.o CMakeFiles/Proyecto1.dir/Analizador.cpp.o CMakeFiles/Proyecto1.dir/Comandos.cpp.o CMakeFiles/Proyecto1.dir/Utils.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/Proyecto1.dir
   POST_BUILD = :

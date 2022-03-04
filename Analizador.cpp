@@ -6,7 +6,9 @@
 #include <sstream>
 #include <fstream>
 #include <cstring>
+#include <list>
 #include "Analizador.h"
+#include "Comandos.h"
 
 using namespace std;
 
@@ -66,7 +68,7 @@ void Analizador::analizar(string comando) {
                     if (toLower(type) == "size") {
                         mkdiskAttribsStruct.size = stoi(attribs);
                     } else if (toLower(type) == "unit") {
-                        strcpy(reinterpret_cast<char *>(mkdiskAttribsStruct.unit), attribs.c_str());
+                        strcpy(mkdiskAttribsStruct.unit, rutaAbsolutaF(attribs).c_str());
                     } else if (toLower(type) == "path") {
                         strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     }
@@ -74,7 +76,7 @@ void Analizador::analizar(string comando) {
 
                 }
 
-                //mkdisk(mkdiskAttribsStruct);
+                Comandos::mkdisk(mkdiskAttribsStruct);
 
 
             } else if (toLower(palabra) == "fdisk") {
@@ -100,7 +102,7 @@ void Analizador::analizar(string comando) {
                     if (toLower(type) == "size") {
                         fdiskAttribsStruct.size = stoi(attribs);
                     } else if (toLower(type) == "unit") {
-                        strcpy(reinterpret_cast<char *>(fdiskAttribsStruct.unit), attribs.c_str());
+                        strcpy(fdiskAttribsStruct.unit, attribs.c_str());
                     } else if (toLower(type) == "path") {
                         strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     } else if (toLower(type) == "name") {
@@ -109,7 +111,6 @@ void Analizador::analizar(string comando) {
 
 
                 }
-
 
 
 
@@ -185,4 +186,49 @@ std::string Analizador::rutaAbsolutaF(string path) {
 
     return rutaAbsoluta;
 
+}
+
+std::string Analizador::rutaRelativaF(std::string path) {
+    int contador = 0;
+    int contadorRelativa = 0;
+    string directorio = path;
+    string lectura;
+    string auxComillas;
+    string rutaAbsoluta;
+    string rutaRelativa;
+    list<string> listStrings;
+
+    stringstream aux(directorio);
+    while (getline(aux, lectura, '/')) {
+        stringstream aux2(lectura);
+
+        getline(aux2, auxComillas, '"');
+
+        listStrings.push_back(auxComillas);
+
+        if (contador != 0) {
+            rutaAbsoluta += "/";
+            rutaAbsoluta += auxComillas;
+        } else {
+            rutaAbsoluta += auxComillas;
+        }
+
+        contador++;
+    }
+
+    list<string>::iterator it = listStrings.begin();
+    auto one_before_end = listStrings.end();
+    advance(one_before_end, -1);
+    for (it; it != one_before_end; ++it) {
+        if (contadorRelativa == 0) {
+            rutaRelativa += *it;
+        } else {
+            rutaRelativa += "/";
+            rutaRelativa += *it;
+        }
+        contadorRelativa++;
+
+    }
+    rutaRelativa += "/";
+    return rutaRelativa;
 }

@@ -10,13 +10,13 @@
 
 struct mkdisk_attribs_struct {
     int size;
-    char unit = 'm';
+    char unit[1];
     char path[150];
 };
 
 struct fdisk_attribs_struct {
     int size;
-    char unit = 'k';
+    char unit[1];
     char path[150];
     char name[25];
 };
@@ -32,7 +32,9 @@ public:
 
     std::string toLower(std::string data);
 
-    std::string rutaAbsolutaF(std::string path);
+    static std::string rutaAbsolutaF(std::string path);
+
+    static std::string rutaRelativaF(std::string path);
 
 };
 
