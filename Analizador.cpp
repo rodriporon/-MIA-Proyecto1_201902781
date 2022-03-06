@@ -68,7 +68,8 @@ void Analizador::analizar(string comando) {
                     if (toLower(type) == "size") {
                         mkdiskAttribsStruct.size = stoi(attribs);
                     } else if (toLower(type) == "unit") {
-                        strcpy(mkdiskAttribsStruct.unit, rutaAbsolutaF(attribs).c_str());
+
+                        mkdiskAttribsStruct.unit = attribs;
                     } else if (toLower(type) == "path") {
                         strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     }
@@ -77,7 +78,6 @@ void Analizador::analizar(string comando) {
                 }
 
                 Comandos::mkdisk(mkdiskAttribsStruct);
-
 
             } else if (toLower(palabra) == "fdisk") {
 
@@ -102,7 +102,8 @@ void Analizador::analizar(string comando) {
                     if (toLower(type) == "size") {
                         fdiskAttribsStruct.size = stoi(attribs);
                     } else if (toLower(type) == "unit") {
-                        strcpy(fdiskAttribsStruct.unit, attribs.c_str());
+
+                        mkdiskAttribsStruct.unit = attribs;
                     } else if (toLower(type) == "path") {
                         strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     } else if (toLower(type) == "name") {
@@ -112,7 +113,7 @@ void Analizador::analizar(string comando) {
 
                 }
 
-
+                Comandos::fdisk(fdiskAttribsStruct);
 
             } else if (toLower(palabra) == "rep") {
 

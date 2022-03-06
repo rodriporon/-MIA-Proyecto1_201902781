@@ -10,13 +10,13 @@
 
 struct mkdisk_attribs_struct {
     int size;
-    char unit[1];
+    std::string unit;
     char path[150];
 };
 
 struct fdisk_attribs_struct {
     int size;
-    char unit[1];
+    std::string unit;
     char path[150];
     char name[25];
 };

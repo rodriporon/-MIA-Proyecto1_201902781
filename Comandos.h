@@ -27,6 +27,7 @@ class Comandos {
 public:
 
     static void mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct);
+    static void fdisk(struct fdisk_attribs_struct fdiskAttribsStruct);
 
 };
 
