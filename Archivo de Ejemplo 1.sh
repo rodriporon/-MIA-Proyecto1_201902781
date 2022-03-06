@@ -2,13 +2,13 @@
 # MIA 1er Semestre 2022
 
 # Creacion de primer disco
-mkDisk -size=50 -Unit=m -path="/home/mia/Disco1.dk"
+mkDisk -size=50 -Unit=m -path=/home/mia/Disco1.dk
 
 # Creacion particiones disco 1, 4 primarias
-fdisk -Size=5 -path="/home/mia/Disco1.dk" -unit=m -name=Particion1
-fdisk -Size=1024 -path="/home/mia/Disco1.dk" -unit=k -name=Particion2
-fdisk -Size=10 -unit=m -path="/home/mia/Disco1.dk" -name=Particion3
-fdisk -Size=25 -path="/home/mia/Disco1.dk" -name=Particion4 -unit=m
+fdisk -Size=5 -path=/home/mia/Disco1.dk -unit=m -name=Particion1
+fdisk -Size=1024 -path=/home/mia/Disco1.dk -unit=k -name=Particion2
+fdisk -Size=10 -unit=m -path=/home/mia/Disco1.dk -name=Particion3
+fdisk -Size=25 -path=/home/mia/Disco1.dk -name=Particion4 -unit=m
 
 # Creacion de segundo y tercer disco
 mkdisk -size=25 -unit=m -path="/home/mia/primer semestre/Disco2.dk"

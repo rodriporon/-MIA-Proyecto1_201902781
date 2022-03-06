@@ -72,8 +72,10 @@ void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
 }
 
 void Comandos::fdisk(struct fdisk_attribs_struct fdiskAttribsStruct) {
-    cout << "Entro con path: " << fdiskAttribsStruct.path << endl;
-    FILE *file = fopen(fdiskAttribsStruct.path, "rb+");
+    string path = fdiskAttribsStruct.path;
+    path.erase(remove(path.end()-1, path.end(), ' '), path.end());
+    cout << "Entro con path: " << path << endl;
+    FILE *file = fopen(path.c_str(), "rb+");
     int seek = 0;
     if (file != NULL) {
         MBR mbr_read;

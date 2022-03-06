@@ -71,6 +71,7 @@ void Analizador::analizar(string comando) {
 
                         mkdiskAttribsStruct.unit = attribs;
                     } else if (toLower(type) == "path") {
+                        cout << "en mkdisk el path es: " << attribs.c_str() << endl;
                         strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     }
 
@@ -105,6 +106,7 @@ void Analizador::analizar(string comando) {
 
                         mkdiskAttribsStruct.unit = attribs;
                     } else if (toLower(type) == "path") {
+                        cout << "en fdisk el path es: " << attribs << endl;
                         strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
                     } else if (toLower(type) == "name") {
                         strcpy(fdiskAttribsStruct.name, attribs.c_str());
