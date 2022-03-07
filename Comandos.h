@@ -28,6 +28,7 @@ public:
 
     static void mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct);
     static void fdisk(struct fdisk_attribs_struct fdiskAttribsStruct);
+    static void rmdisk(struct rmdisk_attribs_struct rmdiskAttribsStruct);
 
 };
 

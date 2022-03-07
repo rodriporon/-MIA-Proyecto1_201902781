@@ -37,9 +37,9 @@ void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
     }
 
     if (mkdir(rutaRelativa.c_str(), 0777) == -1) {
-        cout << "Error: " << strerror(errno) << endl;
+        cerr << "Error: " << strerror(errno) << endl;
     } else {
-        cout << "Directorio creado" << endl;
+        cout << "Directorio creado"     << endl;
     }
 
     if (!Utils::exists(rutaAbsoluta.c_str())) {
@@ -61,10 +61,16 @@ void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
 
     FILE *file = fopen(rutaAbsoluta.c_str(), "rb+");
     if (file != NULL) {
+        for (int i = 0; i < 4; ++i) {
+            strncpy(mbr.particion[i].part_name, "-1", 25);
+            mbr.particion[i].part_size = -1;
+            mbr.particion[i].part_start = -1;
+        }
         int seek = 0;
 
         fseek(file, seek, SEEK_SET);
         fwrite(&mbr, sizeof (MBR), 1, file);
+
         cout << "MBR registrado" << endl;
         fclose(file);
 
@@ -82,7 +88,14 @@ void Comandos::fdisk(struct fdisk_attribs_struct fdiskAttribsStruct) {
         fseek(file, seek, SEEK_SET);
         fread(&mbr_read, sizeof (MBR), 1, file);
         cout << "Tamano: " << mbr_read.mbr_tamano << endl;
+        cout << "Nombre: " << mbr_read.particion[0].part_size << endl;
+        //strncpy(mbr_read.particion[0].part_name, "Primera", 25);
         fclose(file);
     }
+}
+
+void Comandos::rmdisk(struct rmdisk_attribs_struct rmdiskAttribsStruct) {
+    
+    remove(rmdiskAttribsStruct.path);
 }
 

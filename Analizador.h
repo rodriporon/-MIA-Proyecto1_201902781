@@ -11,18 +11,23 @@
 struct mkdisk_attribs_struct {
     int size;
     std::string unit;
-    char path[150];
+    char path[300];
+    std::string fit;
 };
 
 struct fdisk_attribs_struct {
     int size;
     std::string unit;
-    char path[150];
+    char path[300];
     char name[25];
 };
 
+struct rmdisk_attribs_struct {
+    char path[300];
+};
+
 struct  rep_attribs_struct {
-    char path[150];
+    char path[300];
 };
 
 class Analizador {

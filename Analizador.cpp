@@ -18,135 +18,171 @@ struct mkdisk_attribs_struct mkdiskAttribsStruct;
 void Analizador::analizar(string comando) {
 
     string value;
+    string palabraE;
     string path;
+    string attribsE;
     stringstream input_stringstream(comando);
 
-    getline(input_stringstream, value, ' ');
-    if (value == "exec") {
-        getline(input_stringstream, value, '"');
-        getline(input_stringstream, value, '"');
-        path = value;
-        cout << "El path del archivo script es: " << path << endl;
-    } else {
-        cout << "Escriba un comando correcto: exec" << endl;
-    }
+    while (getline(input_stringstream, palabraE, ' ')) {
+        if (palabraE == "#") {
+            break;
+        }
+        if (toLower(palabraE) == "exec") {
+            while (getline(input_stringstream, attribsE, '-')) {
+
+                string type;
+                string delimiter = "=";
+                size_t pos = 0;
+                string token;
 
 
+                while ((pos = attribsE.find(delimiter)) != string::npos) {
+                    token = attribsE.substr(0, pos);
+                    type = token;
 
-    ifstream archivo(path);
-    string linea;
-    string palabra;
-    string attribs;
-    string attrib;
-
-
-    while (getline(archivo, linea)) {
-        //cout << linea << endl;
-        stringstream input_linea(linea);
-        while (getline(input_linea, palabra, ' ')) {
-            if (palabra == "#") {
-                break;
-            }
-
-            if (toLower(palabra) == "mkdisk") {
-
-
-
-                while (getline(input_linea, attribs, '-')) {
-
-                    string type;
-                    string delimiter = "=";
-                    size_t pos = 0;
-                    string token;
-
-                    while ((pos = attribs.find(delimiter)) != string::npos) {
-                        token = attribs.substr(0, pos);
-                        type = token;
-
-                        attribs.erase(0, pos + delimiter.length());
-                    }
-                    if (toLower(type) == "size") {
-                        mkdiskAttribsStruct.size = stoi(attribs);
-                    } else if (toLower(type) == "unit") {
-
-                        mkdiskAttribsStruct.unit = attribs;
-                    } else if (toLower(type) == "path") {
-                        cout << "en mkdisk el path es: " << attribs.c_str() << endl;
-                        strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
-                    }
-
-
+                    attribsE.erase(0, pos + delimiter.length());
                 }
-
-                Comandos::mkdisk(mkdiskAttribsStruct);
-
-            } else if (toLower(palabra) == "fdisk") {
-
-
-
-                fdisk_attribs_struct fdiskAttribsStruct;
-
-
-                while (getline(input_linea, attribs, '-')) {
-
-                    string type;
-                    string delimiter = "=";
-                    size_t pos = 0;
-                    string token;
-
-                    while ((pos = attribs.find(delimiter)) != string::npos) {
-                        token = attribs.substr(0, pos);
-                        type = token;
-
-                        attribs.erase(0, pos + delimiter.length());
-                    }
-                    if (toLower(type) == "size") {
-                        fdiskAttribsStruct.size = stoi(attribs);
-                    } else if (toLower(type) == "unit") {
-
-                        mkdiskAttribsStruct.unit = attribs;
-                    } else if (toLower(type) == "path") {
-                        cout << "en fdisk el path es: " << attribs << endl;
-                        strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
-                    } else if (toLower(type) == "name") {
-                        strcpy(fdiskAttribsStruct.name, attribs.c_str());
-                    }
-
-
-                }
-
-                Comandos::fdisk(fdiskAttribsStruct);
-
-            } else if (toLower(palabra) == "rep") {
-
-                rep_attribs_struct repAttribsStruct;
-
-
-                while (getline(input_linea, attribs, '-')) {
-
-                    string type;
-                    string delimiter = "=";
-                    size_t pos = 0;
-                    string token;
-
-                    while ((pos = attribs.find(delimiter)) != string::npos) {
-                        token = attribs.substr(0, pos);
-                        type = token;
-
-                        attribs.erase(0, pos + delimiter.length());
-                    }
-                    if (toLower(type) == "path") {
-                        strcpy(repAttribsStruct.path, attribs.c_str());
-                    }
-
+                if (toLower(type) == "path") {
+                    path = rutaAbsolutaF(attribsE);
                 }
             }
-
         }
     }
 
-    archivo.close();
-    //fdisk(listFdisk);
+    cout << "El path del script es: " << path << endl;
+
+        ifstream archivo(path);
+        string linea;
+        string palabra;
+        string attribs;
+        string attrib;
+
+
+        while (getline(archivo, linea)) {
+            if (linea[0] == '#') {
+                continue;
+            }
+            stringstream input_linea(linea);
+            while (getline(input_linea, palabra, ' ')) {
+
+                if (toLower(palabra) == "mkdisk") {
+
+
+                    while (getline(input_linea, attribs, '-')) {
+
+                        string type;
+                        string delimiter = "=";
+                        size_t pos = 0;
+                        string token;
+
+                        while ((pos = attribs.find(delimiter)) != string::npos) {
+                            token = attribs.substr(0, pos);
+                            type = token;
+
+                            attribs.erase(0, pos + delimiter.length());
+                        }
+                        if (toLower(type) == "size") {
+                            mkdiskAttribsStruct.size = stoi(attribs);
+                        } else if (toLower(type) == "unit") {
+
+                            mkdiskAttribsStruct.unit = attribs;
+                        } else if (toLower(type) == "path") {
+                            cout << "en mkdisk el path es: " << attribs.c_str() << endl;
+                            strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                        }
+
+
+                    }
+
+                    Comandos::mkdisk(mkdiskAttribsStruct);
+
+                } else if (toLower(palabra) == "fdisk") {
+
+
+                    fdisk_attribs_struct fdiskAttribsStruct;
+
+
+                    while (getline(input_linea, attribs, '-')) {
+
+                        string type;
+                        string delimiter = "=";
+                        size_t pos = 0;
+                        string token;
+
+                        while ((pos = attribs.find(delimiter)) != string::npos) {
+                            token = attribs.substr(0, pos);
+                            type = token;
+
+                            attribs.erase(0, pos + delimiter.length());
+                        }
+                        if (toLower(type) == "size") {
+                            fdiskAttribsStruct.size = stoi(attribs);
+                        } else if (toLower(type) == "unit") {
+
+                            mkdiskAttribsStruct.unit = attribs;
+                        } else if (toLower(type) == "path") {
+                            cout << "en fdisk el path es: " << attribs << endl;
+                            strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                        } else if (toLower(type) == "name") {
+                            strcpy(fdiskAttribsStruct.name, attribs.c_str());
+                        }
+                    }
+
+                    Comandos::fdisk(fdiskAttribsStruct);
+
+                } else if (toLower(palabra) == "rmdisk") {
+
+                    rmdisk_attribs_struct rmdiskAttribsStruct;
+                    while (getline(input_linea, attribs, '-')) {
+
+                        string type;
+                        string delimiter = "=";
+                        size_t pos = 0;
+                        string token;
+
+                        while ((pos = attribs.find(delimiter)) != string::npos) {
+                            token = attribs.substr(0, pos);
+                            type = token;
+
+                            attribs.erase(0, pos + delimiter.length());
+                        }
+                        if (toLower(type) == "path") {
+                            strcpy(rmdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                        }
+
+                    }
+
+                    Comandos::rmdisk(rmdiskAttribsStruct);
+                } else if (toLower(palabra) == "rep") {
+
+                    rep_attribs_struct repAttribsStruct;
+
+
+                    while (getline(input_linea, attribs, '-')) {
+
+                        string type;
+                        string delimiter = "=";
+                        size_t pos = 0;
+                        string token;
+
+                        while ((pos = attribs.find(delimiter)) != string::npos) {
+                            token = attribs.substr(0, pos);
+                            type = token;
+
+                            attribs.erase(0, pos + delimiter.length());
+                        }
+                        if (toLower(type) == "path") {
+                            strcpy(repAttribsStruct.path, attribs.c_str());
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        archivo.close();
+        //fdisk(listFdisk);
 
 
 
