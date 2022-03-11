@@ -10,7 +10,7 @@
 struct mkdisk_attribs_struct;
 
 struct PARTICION{
-    char part_name[25];
+    char part_name[200];
     int part_start;
     int part_size;
 };
@@ -29,6 +29,7 @@ public:
     static void mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct);
     static void fdisk(struct fdisk_attribs_struct fdiskAttribsStruct);
     static void rmdisk(struct rmdisk_attribs_struct rmdiskAttribsStruct);
+    static void mount(struct mount_attribs_struct mountAttribsStruct);
 
 };
 

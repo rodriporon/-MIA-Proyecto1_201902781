@@ -88,7 +88,7 @@ void Analizador::analizar(string comando) {
                             mkdiskAttribsStruct.unit = attribs;
                         } else if (toLower(type) == "path") {
                             cout << "en mkdisk el path es: " << attribs.c_str() << endl;
-                            strcpy(mkdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                            mkdiskAttribsStruct.path = rutaAbsolutaF(attribs);
                         }
 
 
@@ -118,13 +118,19 @@ void Analizador::analizar(string comando) {
                         if (toLower(type) == "size") {
                             fdiskAttribsStruct.size = stoi(attribs);
                         } else if (toLower(type) == "unit") {
-
-                            mkdiskAttribsStruct.unit = attribs;
+                            fdiskAttribsStruct.unit = attribs;
                         } else if (toLower(type) == "path") {
-                            cout << "en fdisk el path es: " << attribs << endl;
-                            strcpy(fdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                            fdiskAttribsStruct.path = rutaAbsolutaF(attribs);
                         } else if (toLower(type) == "name") {
-                            strcpy(fdiskAttribsStruct.name, attribs.c_str());
+                            fdiskAttribsStruct.name = attribs;
+                        } else if (toLower(type) == "type") {
+                            fdiskAttribsStruct.type = attribs;
+                        } else if (toLower(type) == "fit") {
+                            fdiskAttribsStruct.fit = attribs;
+                        } else if (toLower(type) == "delete") {
+                            fdiskAttribsStruct.deleteS = attribs;
+                        } else if (toLower(type) == "add") {
+                            fdiskAttribsStruct.add = attribs;
                         }
                     }
 
@@ -147,7 +153,7 @@ void Analizador::analizar(string comando) {
                             attribs.erase(0, pos + delimiter.length());
                         }
                         if (toLower(type) == "path") {
-                            strcpy(rmdiskAttribsStruct.path, rutaAbsolutaF(attribs).c_str());
+                            rmdiskAttribsStruct.path = attribs;
                         }
 
                     }
@@ -172,7 +178,7 @@ void Analizador::analizar(string comando) {
                             attribs.erase(0, pos + delimiter.length());
                         }
                         if (toLower(type) == "path") {
-                            strcpy(repAttribsStruct.path, attribs.c_str());
+                            repAttribsStruct.path = attribs;
                         }
 
                     }

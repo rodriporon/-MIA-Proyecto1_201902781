@@ -10,24 +10,33 @@
 
 struct mkdisk_attribs_struct {
     int size;
-    std::string unit;
-    char path[300];
+    std::string unit; // Megabytes predeterminado
+    std::string path;
     std::string fit;
 };
 
 struct fdisk_attribs_struct {
     int size;
-    std::string unit;
-    char path[300];
-    char name[25];
+    std::string unit; // kilobytes predeterminado
+    std::string path;
+    std::string type;
+    std::string fit; // peor ajuste WF
+    std::string deleteS;
+    std::string add;
+    std::string name;
 };
 
 struct rmdisk_attribs_struct {
-    char path[300];
+    std::string path;
+};
+
+struct mount_attribs_struct {
+    std::string path;
+    std::string name;
 };
 
 struct  rep_attribs_struct {
-    char path[300];
+    std::string path;
 };
 
 class Analizador {

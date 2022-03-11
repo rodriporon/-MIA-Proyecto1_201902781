@@ -62,7 +62,7 @@ void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
     FILE *file = fopen(rutaAbsoluta.c_str(), "rb+");
     if (file != NULL) {
         for (int i = 0; i < 4; ++i) {
-            strncpy(mbr.particion[i].part_name, "-1", 25);
+            strncpy(mbr.particion[i].part_name, "-1", 200);
             mbr.particion[i].part_size = -1;
             mbr.particion[i].part_start = -1;
         }
@@ -73,29 +73,45 @@ void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
 
         cout << "MBR registrado" << endl;
         fclose(file);
-
     }
 }
 
 void Comandos::fdisk(struct fdisk_attribs_struct fdiskAttribsStruct) {
     string path = fdiskAttribsStruct.path;
     path.erase(remove(path.end()-1, path.end(), ' '), path.end());
-    cout << "Entro con path: " << path << endl;
+
     FILE *file = fopen(path.c_str(), "rb+");
     int seek = 0;
     if (file != NULL) {
         MBR mbr_read;
         fseek(file, seek, SEEK_SET);
         fread(&mbr_read, sizeof (MBR), 1, file);
-        cout << "Tamano: " << mbr_read.mbr_tamano << endl;
-        cout << "Nombre: " << mbr_read.particion[0].part_size << endl;
+        int contador = 1;
+        for (int i = 0; i < 4; ++i) {
+            if ((mbr_read.particion[i].part_size == -1) && (mbr_read.particion[i].part_start = -1) && (strcmp(mbr_read.particion[i].part_name, "-1") == 0)) {
+                cout << contador << endl;
+                contador++;
+            }
+        }
         //strncpy(mbr_read.particion[0].part_name, "Primera", 25);
         fclose(file);
+    } else {
+        cout << "El disco con direccion: " << path << " no existe" << endl;
     }
 }
 
 void Comandos::rmdisk(struct rmdisk_attribs_struct rmdiskAttribsStruct) {
-    
-    remove(rmdiskAttribsStruct.path);
+    if (remove(rmdiskAttribsStruct.path.c_str()) != 0) {
+        cerr << "Error al borrar el disco: " << strerror(errno) << endl;
+    } else {
+        cout << "Disco con direccion: " << rmdiskAttribsStruct.path << " eliminado" << endl;
+    }
+
 }
+
+void Comandos::mount(struct mount_attribs_struct mountAttribsStruct) {
+
+}
+
+
 
