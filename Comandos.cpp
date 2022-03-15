@@ -10,6 +10,8 @@
 #include "Utils.h"
 using namespace std;
 
+int primarias = 0;
+int extendidas = 0;
 
 void Comandos::mkdisk(struct mkdisk_attribs_struct structmkdiskAttribsStruct) {
 
@@ -80,24 +82,34 @@ void Comandos::fdisk(struct fdisk_attribs_struct fdiskAttribsStruct) {
     string path = fdiskAttribsStruct.path;
     path.erase(remove(path.end()-1, path.end(), ' '), path.end());
 
-    FILE *file = fopen(path.c_str(), "rb+");
-    int seek = 0;
-    if (file != NULL) {
-        MBR mbr_read;
-        fseek(file, seek, SEEK_SET);
-        fread(&mbr_read, sizeof (MBR), 1, file);
-        int contador = 1;
-        for (int i = 0; i < 4; ++i) {
-            if ((mbr_read.particion[i].part_size == -1) && (mbr_read.particion[i].part_start = -1) && (strcmp(mbr_read.particion[i].part_name, "-1") == 0)) {
-                cout << contador << endl;
-                contador++;
-            }
-        }
-        //strncpy(mbr_read.particion[0].part_name, "Primera", 25);
-        fclose(file);
-    } else {
-        cout << "El disco con direccion: " << path << " no existe" << endl;
+    if (fdiskAttribsStruct.type == "P") {
+        primarias++;
+    } else if (fdiskAttribsStruct.type == "E") {
+       extendidas++;
     }
+
+    if ((primarias + extendidas) <= 4) {
+        FILE *file = fopen(path.c_str(), "rb+");
+        int seek = 0;
+        if (file != NULL) {
+            MBR mbr_read;
+            fseek(file, seek, SEEK_SET);
+            fread(&mbr_read, sizeof (MBR), 1, file);
+            int contador = 1;
+            for (int i = 0; i < 4; ++i) {
+                if ((mbr_read.particion[i].part_size == -1) && (mbr_read.particion[i].part_start = -1) && (strcmp(mbr_read.particion[i].part_name, "-1") == 0)) {
+                    cout << mbr_read.particion[i].part_name << endl;
+                }
+            }
+            //strncpy(mbr_read.particion[0].part_name, "Primera", 25);
+            fclose(file);
+        } else {
+            cout << "El disco con direccion: " << path << " no existe" << endl;
+        }
+    } else {
+        cout << "Se sobrepasó el máximo de particiones primarias y extendidas" << endl;
+    }
+
 }
 
 void Comandos::rmdisk(struct rmdisk_attribs_struct rmdiskAttribsStruct) {

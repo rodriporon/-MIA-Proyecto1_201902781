@@ -118,19 +118,23 @@ void Analizador::analizar(string comando) {
                         if (toLower(type) == "size") {
                             fdiskAttribsStruct.size = stoi(attribs);
                         } else if (toLower(type) == "unit") {
+                            attribs.erase(remove(attribs.begin(), attribs.end(), ' '));
                             fdiskAttribsStruct.unit = attribs;
                         } else if (toLower(type) == "path") {
                             fdiskAttribsStruct.path = rutaAbsolutaF(attribs);
                         } else if (toLower(type) == "name") {
                             fdiskAttribsStruct.name = attribs;
                         } else if (toLower(type) == "type") {
+                            attribs.erase(remove(attribs.begin(), attribs.end(), ' '));
                             fdiskAttribsStruct.type = attribs;
                         } else if (toLower(type) == "fit") {
+                            attribs.erase(remove(attribs.begin(), attribs.end(), ' '));
                             fdiskAttribsStruct.fit = attribs;
                         } else if (toLower(type) == "delete") {
+                            attribs.erase(remove(attribs.begin(), attribs.end(), ' '));
                             fdiskAttribsStruct.deleteS = attribs;
                         } else if (toLower(type) == "add") {
-                            fdiskAttribsStruct.add = attribs;
+                            fdiskAttribsStruct.add = stoi(attribs);
                         }
                     }
 

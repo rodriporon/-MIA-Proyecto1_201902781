@@ -5,9 +5,9 @@
 mkDisk -size=50 -Unit=m -path=/home/mia/Disco1.dk
 
 # Creacion particiones disco 1, 4 primarias
-fdisk -Size=5 -path=/home/mia/Disco1.dk -unit=m -name=Particion1
+fdisk -Size=5 -path=/home/mia/Disco1.dk -unit=m -type=P -name=Particion1
 fdisk -Size=1024 -path=/home/mia/Disco1.dk -unit=k -name=Particion2
-fdisk -Size=10 -unit=m -path=/home/mia/Disco1.dk -name=Particion3
+fdisk -Size=10 -unit=m -path=/home/mia/Disco1.dk -type=E -name=Particion3
 fdisk -Size=25 -path=/home/mia/Disco1.dk -name=Particion4 -unit=m
 
 # Creacion de segundo y tercer disco

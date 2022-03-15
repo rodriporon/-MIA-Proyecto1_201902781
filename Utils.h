@@ -5,7 +5,6 @@
 #ifndef PROYECTO1_UTILS_H
 #define PROYECTO1_UTILS_H
 
-
 class Utils {
 public:
     static bool exists(const char *path);

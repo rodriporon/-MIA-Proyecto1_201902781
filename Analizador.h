@@ -22,7 +22,7 @@ struct fdisk_attribs_struct {
     std::string type;
     std::string fit; // peor ajuste WF
     std::string deleteS;
-    std::string add;
+    int add;
     std::string name;
 };
 
