@@ -35,8 +35,9 @@ struct mount_attribs_struct {
     std::string name;
 };
 
-struct  rep_attribs_struct {
+struct rep_attribs_struct {
     std::string path;
+
 };
 
 class Analizador {
@@ -44,7 +45,7 @@ public:
 
     void analizar(std::string comando);
 
-    std::string toLower(std::string data);
+    static std::string toLower(std::string data);
 
     static std::string rutaAbsolutaF(std::string path);
 
